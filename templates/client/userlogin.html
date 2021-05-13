@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login</title>
+    <link href="https://fonts.googleapis.com/css?family=Great+Vibes&display=swap" rel="stylesheet">
+    {% include 'client/headerfiles.html' %}
+    <link rel="stylesheet" href="{% static 'usrloginStyle.css' %}">
+
+    <style>
+        .comman-title {
+            display: inline-block;
+            font-size: 2rem;
+            font-weight: 500;
+            text-shadow: 2px 2px 5px #aaa;
+            transition: all .5s;
+        }
+
+        .comman-title:first-letter {
+            color: red;
+            font-family: 'Great Vibes', cursive;
+            font-size: 4rem;
+            font-style: normal;
+            margin-right: 10px;
+        }
+
+        .comman-title:hover {
+            transform: translate(-5px, -3px);
+            text-shadow: 2px 5px 20px #aaa;
+        }
+    </style>
+</head>
+<body>
+<div>
+    {% include 'client/navbar.html' %}
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <!-- Tabs Titles -->
+            <h2 class="active"> Sign In </h2>
+
+            <!-- Icon -->
+            <div class="fadeIn first">
+                <h1 class="comman-title">M Person</h1>
+            </div>
+
+            <!-- Login Form -->
+            <form method="POST" action="" enctype="multipart/form-data">{% csrf_token %}
+                <input type="email" id="login" required class="fadeIn second" name="email" placeholder="login">
+                <input type="password" id="password" required class="fadeIn third" name="password"
+                       placeholder="password">
+                <input type="submit" class="fadeIn fourth" value="Log In">
+            </form>
+
+            <div class="form-group">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <strong>{{ message }}</strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+
+            <!-- Remind Passowrd -->
+            <div id="formFooter">
+                <a class="underlineHover" href="signup">Don't have an account? Sign Up</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% include 'client/footer.html' %}
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'adminDashboard/' %}js/popper.js"></script>
+<script src="{% static 'adminDashboard/' %}js/bootstrap.min.js"></script>
+</body>
+</html>

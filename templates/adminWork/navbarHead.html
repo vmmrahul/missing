@@ -1,0 +1,32 @@
+{% load static %}
+<div class="wrapper d-flex align-items-stretch">
+    <nav id="sidebar">
+        <div class="custom-menu">
+            <button type="button" id="sidebarCollapse" class="btn btn-primary">
+            </button>
+        </div>
+        <div class="img bg-wrap text-center py-4" style="background-image: url({% static 'adminDashboard/' %}images/bg_1.jpg);">
+            <div class="user-logo">
+                <div class="img" style="background-image: url({% static 'adminDashboard/' %}images/logo.jpg);"></div>
+                <h3>Missing Person Portal</h3>
+            </div>
+        </div>
+        <ul class="list-unstyled components mb-5">
+            <li class="active">
+                <a href="dashboard"><span class="fa fa-home mr-3"></span> Home</a>
+            </li>
+            <li>
+                <a href="viewArea"><i class="fas fa-briefcase mr-3"></i>Manage Area</a>
+            </li>
+            <li>
+                <a href="changePassword"><i class="fas fa-key mr-3"></i> Change Password</a>
+            </li>
+            <li>
+                <a href="{% url 'signout' %}"><i class="fas fa-sign-out-alt mr-3"></i> Sign Out</a>
+            </li>
+        </ul>
+
+    </nav>
+
+    <!-- Page Content  -->
+    <div id="content" class="p-4 p-md-5 pt-5">

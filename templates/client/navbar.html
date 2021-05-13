@@ -1,0 +1,58 @@
+{% load static %}
+
+<header>
+    <nav class="mb-1 navbar navbar-expand-lg navbar-dark" style="background: #000f56">
+        <a class="navbar-brand comman-title" href="{% url 'home' %}">Missing Person</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
+                aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
+            <ul class="navbar-nav mr-auto text-white">
+                <li class="nav-item ">
+                    <a class="nav-link text-white" href="{% url 'home' %}">Home
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">Find Member</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">Top Story</a>
+                </li>
+            </ul>
+            {% if 'user' in request.session %}
+                <div class="dropdown pmd-dropdown pmd-user-info ml-auto" style="color: white; margin-right: 40px">
+                    <a href="javascript:void(0);" style="color: white; text-decoration: none" class="btn-user dropdown-toggle media align-items-center"
+                       data-toggle="dropdown" data-sidebar="true" aria-expanded="false">
+                        <img class="mr-2" src="{% static 'media/' %}{{ request.session.user.coverphoto }}" width="40"
+                             height="40" alt="avatar">
+                        <div class="media-body">
+                            User
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                        <a class="dropdown-item" href="javascript:void(0);">Edit Profile</a>
+                        <a class="dropdown-item" href="userlogout">Logout</a>
+                    </ul>
+                </div>
+            {% else %}
+                <ul class="navbar-nav ml-auto nav-flex-icons">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white btn btn-outline-primary" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-user"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-default"
+                             aria-labelledby="navbarDropdownMenuLink-333">
+                            <a class="dropdown-item" href="signup"><i class="fas fa-user-plus mr-3"></i>SignUp</a>
+                            <a class="dropdown-item" href="userlogin"><i class="fas fa-sign-in-alt mr-3"></i>Login</a>
+                        </div>
+                    </li>
+                </ul>
+            {% endif %}
+
+        </div>
+    </nav>
+</header>
