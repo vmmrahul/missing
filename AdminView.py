@@ -114,3 +114,10 @@ def deleteArea(request):
     return redirect('viewArea')
 
 # End of area work
+
+
+def addStroy(request):
+    return render(request, 'adminWork/addStory.html')
+
+def viewStory(request):
+    return render(request, 'adminWork/viewStory.html')

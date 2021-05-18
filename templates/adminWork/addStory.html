@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add Story</title>
+    {% include 'adminWork/headerfile.html' %}
+    <link rel="stylesheet" href="{% static 'summernote-0.8.18-dist/summernote-bs4.css' %}">
+</head>
+<body>
+{% include 'adminWork/navbarHead.html' %}
+
+<div>
+    <div class="card">
+        <div class="card-header">
+            <h1>Add Story</h1>
+        </div>
+        <div class="card-body">
+            <form action="">
+                <div class="form-group">
+                    <label for=""></label>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% include 'adminWork/navbarfooter.html' %}
+<script src="{% static 'summernote-0.8.18-dist/summernote-bs4.js' %}"></script>
+<script>
+    $(document).ready(function () {
+        $('#summernote').summernote();
+    });
+</script>
+</body>
+</html>

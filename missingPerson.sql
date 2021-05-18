@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 07, 2021 at 08:24 AM
+-- Generation Time: May 18, 2021 at 05:21 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -41,7 +41,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`email`, `username`, `password`, `name`, `mobile`, `type`) VALUES
-('admin@gmail.com', 'admin', '12345', 'admin', '6280995201', 'admin');
+('admin@gmail.com', 'admin', '1234', 'admin', '6280995201', 'admin');
 
 -- --------------------------------------------------------
 
@@ -60,7 +60,83 @@ CREATE TABLE `area` (
 --
 
 INSERT INTO `area` (`name`, `state`, `id`) VALUES
-('amritsar', 'Punjab', 1);
+('amritsar', 'Punjab', 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `profile`
+--
+
+CREATE TABLE `profile` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `fatherName` varchar(255) NOT NULL,
+  `address` text NOT NULL,
+  `identificationMarks` varchar(255) NOT NULL,
+  `mobile` varchar(20) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `photo` text NOT NULL,
+  `status` varchar(25) NOT NULL,
+  `area` int(11) DEFAULT NULL,
+  `SignUp` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `profile`
+--
+
+INSERT INTO `profile` (`id`, `name`, `fatherName`, `address`, `identificationMarks`, `mobile`, `email`, `photo`, `status`, `area`, `SignUp`) VALUES
+(1, 'demo', 'sham', 'dddddd', 'mole on left hand', '6280995201', 'ram@gmail.com', '0e80c354880303.596dbfc8656a0.png', 'Missing', 3, 'demo@gmail.com');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `signup`
+--
+
+CREATE TABLE `signup` (
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `dob` date NOT NULL,
+  `gender` varchar(50) NOT NULL,
+  `coverphoto` varchar(500) NOT NULL,
+  `profession` varchar(500) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `signup`
+--
+
+INSERT INTO `signup` (`name`, `email`, `password`, `dob`, `gender`, `coverphoto`, `profession`) VALUES
+('demo', 'demo@gmail.com', '1234', '2021-05-01', 'Male', 'signUp/0e80c354880303.596dbfc8656a0_L1W7uQs.png', 'python dev');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `success_stories`
+--
+
+CREATE TABLE `success_stories` (
+  `id` int(11) NOT NULL,
+  `profileid` int(11) NOT NULL,
+  `description` text NOT NULL,
+  `details` text NOT NULL,
+  `dateOfStory` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `trace`
+--
+
+CREATE TABLE `trace` (
+  `id` int(11) NOT NULL,
+  `profileid` int(11) NOT NULL,
+  `traceDetail` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
@@ -79,6 +155,34 @@ ALTER TABLE `area`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `profile`
+--
+ALTER TABLE `profile`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `area` (`area`),
+  ADD KEY `SignUp` (`SignUp`);
+
+--
+-- Indexes for table `signup`
+--
+ALTER TABLE `signup`
+  ADD PRIMARY KEY (`email`);
+
+--
+-- Indexes for table `success_stories`
+--
+ALTER TABLE `success_stories`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `profileid` (`profileid`);
+
+--
+-- Indexes for table `trace`
+--
+ALTER TABLE `trace`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `profileid` (`profileid`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -86,7 +190,48 @@ ALTER TABLE `area`
 -- AUTO_INCREMENT for table `area`
 --
 ALTER TABLE `area`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `profile`
+--
+ALTER TABLE `profile`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `success_stories`
+--
+ALTER TABLE `success_stories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `trace`
+--
+ALTER TABLE `trace`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `profile`
+--
+ALTER TABLE `profile`
+  ADD CONSTRAINT `profile_ibfk_1` FOREIGN KEY (`area`) REFERENCES `area` (`id`),
+  ADD CONSTRAINT `profile_ibfk_2` FOREIGN KEY (`SignUp`) REFERENCES `signup` (`email`);
+
+--
+-- Constraints for table `success_stories`
+--
+ALTER TABLE `success_stories`
+  ADD CONSTRAINT `success_stories_ibfk_1` FOREIGN KEY (`profileid`) REFERENCES `profile` (`id`);
+
+--
+-- Constraints for table `trace`
+--
+ALTER TABLE `trace`
+  ADD CONSTRAINT `trace_ibfk_1` FOREIGN KEY (`profileid`) REFERENCES `profile` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

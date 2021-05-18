@@ -32,9 +32,16 @@ urlpatterns = [
     path('deleteArea', deleteArea, name='deleteArea'),
     # Area work ends
 
+    # Add Story
+    path('addStroy', addStroy, name='addStroy'),
+    path('viewStory', viewStory, name='viewStory'),
+
+    # end of story work
+
     #     user work start
     path('signup', userView.signupPage, name='signup-Page'),
     path('userlogin', userView.userlogin, name='userlogin'),
     path('userlogout', userView.userlogout, name='userlogout'),
     path('', userView.home, name='home'),
+    path('createPost', userView.createPost, name='createPost'),
 ]
