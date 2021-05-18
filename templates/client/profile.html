@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Profile</title>
+    {% include 'client/headerfiles.html' %}
+</head>
+<body>
+<style>
+    .profile {
+        background: #fff url("https://storage.googleapis.com/chydlx/codepen/minimalist-profile-card/card-bg.jpg") top -10% center no-repeat;
+        background-size: contain;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px -5px rgba(60, 60, 60, 0.2);
+        text-align: center;
+        padding: 30px 60px;
+    }
+
+    .profile img {
+        background-color: #dddfe6;
+        height: 120px;
+        width: 120px;
+        border-radius: 50%;
+        margin: auto auto 15px;
+        display: block;
+    }
+
+    .profile h1 {
+        font-size: 35px;
+        margin: 10px auto 0;
+        letter-spacing: 1px;
+    }
+
+    .profile h2 {
+        margin: auto;
+        color: #070707;
+        font-weight: 300;
+        font-size: 20px;
+    }
+
+    .profile .button {
+        display: block;
+        text-decoration: none;
+        background: #3b70fc;
+        color: #f9f9f9;
+        padding: 12px;
+        border: none;
+        border-radius: 25px;
+        margin-top: 30px;
+        font-size: 16px;
+        font-weight: 700;
+        min-width: 200px;
+        transition: 0.2s;
+    }
+
+    .profile .button span {
+        font-size: 20px;
+        line-height: 1;
+        vertical-align: top;
+    }
+
+    .profile .button:hover {
+        background: #1856fb;
+    }
+</style>
+{% include 'client/navbar.html' %}
+<div class="container mt-5 mb-5">
+    <div class="container">
+        <div class="profile">
+            <img src="{% static 'media/' %}{{ request.session.user.coverphoto }}"
+                 alt="">
+            <h1>{{ request.session.user.name }}</h1>
+            <h2>{{ request.session.user.email }}</h2>
+            <a class="button" href="createPost" target="_blank"><span>+</span> Post</a>
+        </div>
+    </div>
+    <div class="mt-4">
+        {{ results }}
+        {% for result in results %}
+            <div class="card">
+                <div class="card-body">
+                    <div class="col-2">
+                        <img src="{% static 'media/signUp/' %}{{ result.photo }}" width="100%" alt="">
+                    </div>
+                    <div class="col-10"></div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% include 'client/footer.html' %}
+</body>
+</html>

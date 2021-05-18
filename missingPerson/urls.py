@@ -44,4 +44,5 @@ urlpatterns = [
     path('userlogout', userView.userlogout, name='userlogout'),
     path('', userView.home, name='home'),
     path('createPost', userView.createPost, name='createPost'),
+    path('userProfile', userView.userProfile, name='userProfile'),
 ]

@@ -101,3 +101,12 @@ def createPost(request):
         conn.commit()
         return redirect('createPost')
     return render(request, 'client/createPost.html', {'data': resut})
+
+def userProfile(request):
+    query ="SELECT * FROM `profile`  where SignUp='{}'".format(request.session['user']['email'])
+    print(query)
+    conn = makeConnections()
+    cr = conn.cursor()
+    cr.execute(query)
+    results = cr.fetchall()
+    return render(request,'client/profile.html',{'results':results})
