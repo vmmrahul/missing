@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
 
 
+
 def makeConnections():
     return connect(host='127.0.0.1', user='root', password='', database='missingPerson',
                    cursorclass=cursors.DictCursor)
@@ -110,3 +111,11 @@ def userProfile(request):
     cr.execute(query)
     results = cr.fetchall()
     return render(request,'client/profile.html',{'results':results})
+
+def deletePost(request):
+    query = "DELETE FROM `profile` WHERE id='{}'".format(request.GET['id'])
+    conn = makeConnections()
+    cr = conn.cursor()
+    cr.execute(query)
+    conn.commit()
+    return redirect('userProfile')

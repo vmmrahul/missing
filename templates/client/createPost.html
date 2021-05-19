@@ -47,10 +47,18 @@
                 </div>
             </div>
             <div class="col-6">
-                <div class="form-group">
-                    <label for="photo">Photo</label>
-                    <input type="file" id="photo" name="photo" c class="form-control">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="photo">Photo</label>
+                            <input type="file" id="photo" name="photo" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <img src="" width="200px" id="img" alt="">
+                    </div>
                 </div>
+                <textarea style="display: none" name="b64" id="b64" cols="30" rows="10"></textarea>
             </div>
         </div>
         <div class="row">
@@ -73,12 +81,45 @@
         </div>
 
         <div class="form-group text-right">
-            <button class="btn btn-primary w-25">Post</button>
+            <button class="btn btn-primary w-25" disabled='disabled'>Post</button>
         </div>
     </form>
 </div>
 
 
 {% include 'client/footer.html' %}
+<script>
+    function readFile() {
+        if (this.files && this.files[0]) {
+            var FR = new FileReader();
+
+            FR.addEventListener("load", function (e) {
+                document.getElementById("img").src = e.target.result;
+                document.getElementById("b64").value = e.target.result;
+            });
+
+            FR.readAsDataURL(this.files[0]);
+        }
+    }
+
+    function loadDoc() {
+        var form = new FormData();
+        // form.append(
+        //   "csrfmiddlewaretoken",
+        //   document.getElementsByTagName("csrfmiddlewaretoken").value
+        // );
+        form.append("b64", document.getElementById("b64").value);
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("demo").innerHTML = this.response;
+            }
+        };
+        xhttp.open("POST", "getindex", true);
+        xhttp.send(form);
+    }
+
+    document.getElementById("photo").addEventListener("change", readFile);
+</script>
 </body>
 </html>
