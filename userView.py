@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from pymysql import *
 from django.contrib import messages
-
+from django.views.decorators.csrf import csrf_exempt
 from django.core.files.storage import FileSystemStorage
 
 
@@ -71,7 +71,13 @@ def userlogout(request):
 
 
 def home(request):
-    return render(request, 'client/index.html')
+    query = "SELECT * FROM `profile` WHERE `status` = 'Missing'  ORDER BY rand()"
+    conn = makeConnections()
+    cr = conn.cursor()
+    cr.execute(query)
+    resut = cr.fetchall()
+
+    return render(request, 'client/index.html',{'results':resut})
 
 
 def createPost(request):
@@ -112,6 +118,17 @@ def userProfile(request):
     results = cr.fetchall()
     return render(request,'client/profile.html',{'results':results})
 
+
+def updatePostStatus(request):
+    name = request.GET['name']
+    query ="UPDATE `profile` SET `status`='Found' WHERE `id`='{}'".format(request.GET['id'])
+    conn = makeConnections()
+    cr = conn.cursor()
+    cr.execute(query)
+    conn.commit()
+    messages.success(request,'Sucess fully update status {}'.format(name))
+    return redirect('userProfile')
+
 def deletePost(request):
     query = "DELETE FROM `profile` WHERE id='{}'".format(request.GET['id'])
     conn = makeConnections()
@@ -119,3 +136,29 @@ def deletePost(request):
     cr.execute(query)
     conn.commit()
     return redirect('userProfile')
+
+def topStoryFound(request):
+    query = "SELECT * FROM `profile` WHERE `status` = 'Found'  ORDER BY rand()"
+    conn = makeConnections()
+    cr = conn.cursor()
+    cr.execute(query)
+    resut = cr.fetchall()
+    return render(request, 'client/topstory.html',{'results':resut})
+
+
+from haarCascade import get_cv2_image_from_base64_string,get_cropped_img_if_2_eye
+
+@csrf_exempt
+def validateImages(request):
+    print(request.POST)
+    b64 = request.POST['b64']
+    bash64_to_img = get_cv2_image_from_base64_string(b64)
+    check_eyes = get_cropped_img_if_2_eye(bash64_to_img)
+    if check_eyes:
+        return HttpResponse('success')
+    else:
+        return HttpResponse("fail")
+
+
+
+

@@ -7,9 +7,9 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Home</title>
-    {% include 'client/headerfiles.html' %}
-{#    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">#}
     <link rel="stylesheet" href="../../static/css/bootstrap.css">
+    {% include 'client/headerfiles.html' %}
+    {#    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">#}
 </head>
 <body>
 {% include 'client/navbar.html' %}
@@ -46,24 +46,52 @@
         </a>
     </div>
 
+    <section>
+        <div class="mt-5">
+            <div class="text-center">
+                <h1>Find your Member</h1>
+            </div>
+        </div>
+        <div class="container mb-5">
+            <div class="row">
+                {% for result in results %}
+                    <div class="col-sm-4 mt-3">
 
-    <div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Dropdown button
-  </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#">Action</a>
-    <a class="dropdown-item" href="#">Another action</a>
-    <a class="dropdown-item" href="#">Something else here</a>
-  </div>
-</div>
+                        <div class="card text-center text-white" style="background-color:#008f37;width: 22rem;">
+                            <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                                <img src="{% static 'media/' %}{{ result.photo }}" class="img-fluid"
+                                     style="height: 200px"/>
+                                <a href="#!">
+                                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
+                                </a>
+                            </div>
+                            <div class="card-header">
+                                <h5>{{ result.name }} </h5>
+                                <h6>Son of {{ result.fatherName }}</h6>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ result.email }}</h5>
+                                <p class="card-text">
+
+                                    Identification Marks: {{ result.identificationMarks }} <br>
+                                    Address: {{ result.address }} <br>
+                                    Mobile : {{ result.mobile }}
+
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
 </section>
 
 {% include 'client/footer.html' %}
 {#<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>#}
 {#<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" referrerpolicy="no-referrer"></script>#}
 {#<script src="{% static 'js/bootstrap.js' %}"></script>#}
-
 
 
 </body>

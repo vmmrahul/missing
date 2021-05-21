@@ -121,9 +121,21 @@
     </div>
     <div class="mt-4">
         <div class="text-center">
-            <h2 >My Posts</h2>
+            <h2>My Posts</h2>
         </div>
         <hr>
+        <div class="form-group">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        <strong>{{ message }}</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
         <div class="card-container">
             {% for result in results %}
                 <div class="card effect5">
@@ -146,11 +158,11 @@
                                 <p class="d-block"><span class="font-weight-bold ">mobile :</span>{{ result.mobile }}
                                 </p>
                                 <div class="d-flex">
-                                    <a href="deletePost?id={{ result.id }}" onclick="return confirm('Are you Sure to Delete')" class="btn btn-danger mr-3">Delete</a>
+                                    <a href="deletePost?id={{ result.id }}"
+                                       onclick="return confirm('Are you Sure to Delete')" class="btn btn-danger mr-3">Delete</a>
                                     {% if result.status == 'Missing' %}
-                                        <form action="?status=Found">
-                                            <button class="btn btn-success">Found</button>
-                                        </form>
+                                        <a href="updatePostStatus?id={{ result.id }}&name={{ result.name }}"
+                                           class="btn btn-success" onclick="return confirm('Are you Found this member')">Found</a>
                                     {% endif %}
                                 </div>
                             </div>
