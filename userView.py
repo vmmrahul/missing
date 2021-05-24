@@ -169,12 +169,17 @@ def searchMissingPerson(request):
 @csrf_exempt
 def searchResultAction(request):
     b64 = request.POST['b64']
+    print(b64)
     bash64_to_img = get_cv2_image_from_base64_string(b64)
-    obj = MakeEncodeAndCFindCriminal()
-    result  = obj.search(bash64_to_img)
-    if len(result)>0:
-        return JsonResponse({'content':result})
+    check_eyes = get_cropped_img_if_2_eye(bash64_to_img)
+    if check_eyes:
+        obj = MakeEncodeAndCFindCriminal()
+        result  = obj.search(bash64_to_img)
+        if result is not None:
+            return JsonResponse({'content':result})
+        else:
+            return JsonResponse({'content':'no'})
     else:
-        return JsonResponse({'content':'no'})
+        return JsonResponse({'content': 'Invalid'})
 
 

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 18, 2021 at 05:21 AM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 8.0.2
+-- Generation Time: May 24, 2021 at 02:02 PM
+-- Server version: 10.4.13-MariaDB
+-- PHP Version: 7.4.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -76,7 +76,7 @@ CREATE TABLE `profile` (
   `identificationMarks` varchar(255) NOT NULL,
   `mobile` varchar(20) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `photo` text NOT NULL,
+  `photo` text DEFAULT NULL,
   `status` varchar(25) NOT NULL,
   `area` int(11) DEFAULT NULL,
   `SignUp` varchar(255) NOT NULL
@@ -87,7 +87,9 @@ CREATE TABLE `profile` (
 --
 
 INSERT INTO `profile` (`id`, `name`, `fatherName`, `address`, `identificationMarks`, `mobile`, `email`, `photo`, `status`, `area`, `SignUp`) VALUES
-(1, 'demo', 'sham', 'dddddd', 'mole on left hand', '6280995201', 'ram@gmail.com', '0e80c354880303.596dbfc8656a0.png', 'Missing', 3, 'demo@gmail.com');
+(2, 'koli', 'koli ss', 'amritsar', 'mole in left hand', '6280995201', 'koli@gmail.com', 'missingPerson/2.jpg', 'Missing', 3, 'demo@gmail.com'),
+(3, 'testing', 'test testing', '1234 main str', 'mole in left hand', '6280995201', 'admin@gmail.com', 'missingPerson/3.png', 'Found', 3, 'demo@gmail.com'),
+(4, 'sham', 'sham singh', 'amritsar', 'mole in left hand', '6280995201', 'sham@gmail.com', 'missingPerson/4.png', 'Missing', 3, 'demo@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -196,7 +198,7 @@ ALTER TABLE `area`
 -- AUTO_INCREMENT for table `profile`
 --
 ALTER TABLE `profile`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `success_stories`

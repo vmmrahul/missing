@@ -34,7 +34,7 @@ def get_cropped_img_if_2_eye(image_path):
 
 class MakeEncodeAndCFindCriminal:
     def __init__(self):
-        self.path = "../static/media/missingPerson"
+        self.path = "./static/media/missingPerson"
         self.images = []
         self.classNames = []
         self.myList = os.listdir(self.path)
@@ -47,7 +47,8 @@ class MakeEncodeAndCFindCriminal:
         self.encodeListKnown = self.findEncodings(self.images)
 
     def search(self,image):
-        imgS = cv2.imread(image)
+        # imgS = cv2.imread(image)
+        imgS = image
         imgS = cv2.cvtColor(imgS, cv2.COLOR_BGR2RGB)
         faceCurFrame = face_recognition.face_locations(imgS)
         encodeCurFrame = face_recognition.face_encodings(imgS, faceCurFrame)
@@ -93,5 +94,5 @@ def get_cv2_image_from_base64_string(b64str):
 # obj =MakeEncodeAndCFindCriminal()
 # print(obj.search(d))
 
-obj = MakeEncodeAndCFindCriminal()
-print(obj.search('/home/rahul/Desktop/Programming/Pycharm_project/celebrity/Moedl/images_dataset/cropped/roger_federer/roger_federer1.png'))
+# obj = MakeEncodeAndCFindCriminal()
+# print(obj.search('/home/rahul/Desktop/Programming/Pycharm_project/celebrity/Moedl/images_dataset/cropped/roger_federer/roger_federer1.png'))
