@@ -1,5 +1,5 @@
 import datetime
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from pymysql import *
 from django.contrib import messages
@@ -98,13 +98,15 @@ def createPost(request):
         area = request.POST['area']
         status = 'Missing'
         user = request.session['user']['email']
-
         fs = FileSystemStorage()
-        filename = fs.save('missingPerson/' + photo.name, photo)
-        query = f"INSERT INTO `profile`(`name`, `fatherName`, `address`, `identificationMarks`, `mobile`, `email`, `photo`, `status`, `area`, `SignUp`) VALUES ('{name}','{fname}','{address}','{identificationMarks}','{mobile}','{email}','{filename}','{status}','{area}','{user}')"
+        query = f"INSERT INTO `profile`(`name`, `fatherName`, `address`, `identificationMarks`, `mobile`, `email`,  `status`, `area`, `SignUp`) VALUES ('{name}','{fname}','{address}','{identificationMarks}','{mobile}','{email}','{status}','{area}','{user}')"
         conn = makeConnections()
         cr = conn.cursor()
         cr.execute(query)
+        id = cr.lastrowid
+        filename = fs.save('missingPerson/' + str(id)+'.'+photo.name.split('.')[1], photo)
+        upQuery = "UPDATE `profile` SET `photo`='{}' WHERE `id`='{}'".format(filename,id)
+        cr.execute(upQuery)
         conn.commit()
         return redirect('createPost')
     return render(request, 'client/createPost.html', {'data': resut})
@@ -146,7 +148,7 @@ def topStoryFound(request):
     return render(request, 'client/topstory.html',{'results':resut})
 
 
-from haarCascade import get_cv2_image_from_base64_string,get_cropped_img_if_2_eye
+from haarCascade import get_cv2_image_from_base64_string,get_cropped_img_if_2_eye, MakeEncodeAndCFindCriminal
 
 @csrf_exempt
 def validateImages(request):
@@ -160,5 +162,19 @@ def validateImages(request):
         return HttpResponse("fail")
 
 
+def searchMissingPerson(request):
+    return render(request, 'client/SearchMissingPerson.html')
+
+
+@csrf_exempt
+def searchResultAction(request):
+    b64 = request.POST['b64']
+    bash64_to_img = get_cv2_image_from_base64_string(b64)
+    obj = MakeEncodeAndCFindCriminal()
+    result  = obj.search(bash64_to_img)
+    if len(result)>0:
+        return JsonResponse({'content':result})
+    else:
+        return JsonResponse({'content':'no'})
 
 

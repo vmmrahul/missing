@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Search Missing Person</title>
+    {% include 'client/headerfiles.html' %}
+</head>
+<body>
+{% include 'client/navbar.html' %}
+
+<div class="container">
+    <div class="text-center">
+        <h1>Find Your Member</h1>
+    </div>
+    <div>
+        <div class="row">
+            <div class="col-sm-6 offset-3">
+                <form action="">
+                    <div class="form-group d-flex">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="photo" name="" required>
+                            <label class="custom-file-label" id="imageName" for="validatedCustomFile">Choose
+                                file...</label>
+                        </div>
+                    </div>
+                    <div class="form-group text-center">
+                        <img src="" alt="" id="img" width="200px">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'client/footer.html' %}
+
+<script>
+    function readFile() {
+        if (this.files && this.files[0]) {
+            document.getElementById('imageName').innerHTML = this.files[0].name;
+            var FR = new FileReader();
+
+            FR.addEventListener("load", function (e) {
+                document.getElementById("img").src = e.target.result;
+                var form = new FormData();
+                // form.append(
+                //   "csrfmiddlewaretoken",
+                //   document.getElementsByTagName("csrfmiddlewaretoken").value
+                // );
+                form.append("b64", e.target.result);
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var output = JSON.parse(this.response);
+                        console.log(output);
+                    }
+                };
+                xhttp.open("POST", "searchResultAction", true);
+                xhttp.send(form);
+            });
+
+            FR.readAsDataURL(this.files[0]);
+        }
+    }
+
+    document.getElementById("photo").addEventListener("change", readFile);
+</script>
+</body>
+</html>

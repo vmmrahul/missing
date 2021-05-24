@@ -49,4 +49,6 @@ urlpatterns = [
     path('validateImages', userView.validateImages, name='validateImages'),
     path('updatePostStatus', userView.updatePostStatus, name='updatePostStatus'),
     path('topStoryFound', userView.topStoryFound, name='topStoryFound'),
+    path('searchMissingPerson', userView.searchMissingPerson, name='searchMissingPerson'),
+    path('searchResultAction', userView.searchResultAction, name='searchResultAction'),
 ]
