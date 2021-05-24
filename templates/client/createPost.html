@@ -63,7 +63,9 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="photo">Photo</label>
+
                             <input type="file" id="photo" name="photo" class="form-control">
+                            <p id="invalid"></p>
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -119,6 +121,7 @@
                         if (this.response.trim() == 'success') {
                             $('#mySubmitButton').removeAttr("disabled")
                         } else {
+                            document.getElementById('invalid').innerHTML="<spam class='text-danger'>Invalid Image</span>"
                             $('#mySubmitButton').attr('disabled', 'disabled');
                         }
                     }
